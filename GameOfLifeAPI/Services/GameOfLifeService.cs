@@ -1,4 +1,5 @@
 ﻿using GameOfLifeAPI.Contracts;
+using GameOfLifeAPI.Extensions;
 using GameOfLifeAPI.Persistence;
 using GameOfLifeAPI.Persistence.Models;
 
@@ -39,7 +40,7 @@ namespace GameOfLifeAPI.Services
                 board = ComputeNextState(board);
                 var boardString = System.Text.Json.JsonSerializer.Serialize(board);
 
-                if (IsBoardDead(board) || !seenStates.Add(boardString))
+                if (board.IsDead() || !seenStates.Add(boardString))
                 {
                     boardEntity.State = boardString;
                     await _context.SaveChangesAsync();
@@ -60,7 +61,9 @@ namespace GameOfLifeAPI.Services
                 for (int c = 0; c < cols; c++)
                 {
                     int liveNeighbors = GetCellLiveNeighbors(board, r, c);
-                    newBoard[r][c] = (board[r][c] == 1 && (liveNeighbors == 2 || liveNeighbors == 3)) || (board[r][c] == 0 && liveNeighbors == 3) ? 1 : 0;
+                    var shouldSurvive = board[r][c] == 1 && (liveNeighbors == 2 || liveNeighbors == 3); 
+                    var shouldComeAlive = board[r][c] == 0 && liveNeighbors == 3;
+                    newBoard[r][c] = shouldSurvive || shouldComeAlive ? 1 : 0;
                 }
             }
             return newBoard;
@@ -71,18 +74,17 @@ namespace GameOfLifeAPI.Services
             int count = 0, rows = board.Length, cols = board[0].Length;
             for (int r = row - 1; r <= row + 1; r++)
                 for (int c = col - 1; c <= col + 1; c++)
-                    if ((r != row || c != col) && r >= 0 && r < rows && c >= 0 && c < cols && board[r][c] == 1)
+                {
+                    var isNotSelf = r != row || c != col;
+                    var rowWithinBounds = r >= 0 && r < rows;
+                    var columnWithinBounds = c >= 0 && c < cols;
+                    if (isNotSelf && rowWithinBounds && columnWithinBounds && board[r][c] == 1)
                         count++;
+                }    
+                    
             return count;
         }
 
-        private static bool IsBoardDead(int[][] board)
-        {
-            foreach (var row in board)
-                foreach (var cell in row)
-                    if (cell == 1)
-                        return false;
-            return true;
-        }
+        
     }
 }

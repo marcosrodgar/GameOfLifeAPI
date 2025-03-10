@@ -57,5 +57,17 @@ namespace GameOfLife.Tests.Extensions
 
             board.IsValidBoard().Should().BeFalse();
         }
+
+        [Fact]
+        public void DeadBoard_ShouldReturnTrue()
+        {
+            int[][] board = new int[][]
+            {
+                new int[] { 0, 0 },
+                new int[] { 0, 0 }
+            };
+
+            board.IsDead().Should().BeTrue();
+        }
     }
 }

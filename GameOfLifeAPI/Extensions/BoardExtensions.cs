@@ -14,5 +14,13 @@
 
             return true;
         }
+        public static bool IsDead(this int[][] board)
+        {
+            foreach (var row in board)
+                foreach (var cell in row)
+                    if (cell == 1)
+                        return false;
+            return true;
+        }
     }
 }
