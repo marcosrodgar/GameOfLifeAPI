@@ -63,7 +63,7 @@ dotnet run
 
 ## 🔗 API Endpoints
 
-### `POST /boards`
+### `POST /Board`
 **Upload a new board**
 
 #### Request Body (2D array of 0s and 1s):
@@ -86,17 +86,17 @@ dotnet run
 
 ---
 
-### `GET /boards/{id}/next`
+### `GET /Board/{id}/next`
 **Returns the next generation for a board.**
 
 ---
 
-### `GET /boards/{id}/next/{steps}`
+### `GET /Board/{id}/next/{steps}`
 **Returns the board state after N steps.**
 
 ---
 
-### `GET /boards/{id}/final?maxAttempts=10`
+### `GET /Board/{id}/final?maxAttempts=10`
 **Simulates up to `maxAttempts` steps and returns the final stable state or dead board.**
 
 Returns `400 Bad Request` if no stable state is reached.
