@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GameOfLifeAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("board")]
     public class BoardController : ControllerBase
     {
         private readonly ILogger<BoardController> _logger;
