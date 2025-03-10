@@ -1,0 +1,45 @@
+# .NET build artifacts
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.csproj.user
+
+# SQLite database file
+*.db
+*.db-shm
+*.db-wal
+
+# EF Core Migrations metadata
+Migrations/
+
+# Visual Studio
+.vscode/
+.vs/
+*.sln.docstates
+
+# Rider
+.idea/
+
+# Logs
+*.log
+
+# User secrets
+secrets.json
+
+# Test results
+TestResults/
+coverage/
+
+# Environment files
+.env
+.env.*
+
+# ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+# Backup & temp
+*~
+*.
